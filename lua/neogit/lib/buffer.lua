@@ -249,7 +249,9 @@ function Buffer:close(force)
       self.old_cwd = nil
     end
 
-    api.nvim_buf_delete(self.handle, { force = force })
+    if api.nvim_buf_is_valid(self.old_buf) then
+      api.nvim_win_set_buf(self.win_handle, self.old_buf)
+    end
     return
   end
 
